@@ -35,7 +35,7 @@ class MybatisPlusSpringbootApplicationTests {
         //INSERT INTO user ( id, name, age, email ) VALUES ( ?, ?, ?, ? )
         int result = userMapper.insert(user);
         System.out.println("受影响行数：" + result);
-        //1475754982694199298
+        //1553594264166903810L
         System.out.println("id自动获取：" + user.getId());
     }
 
