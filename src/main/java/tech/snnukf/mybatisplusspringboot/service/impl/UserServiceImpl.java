@@ -1,7 +1,7 @@
 package tech.snnukf.mybatisplusspringboot.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 import tech.snnukf.mybatisplusspringboot.mapper.UserMapper;
 import tech.snnukf.mybatisplusspringboot.service.IUserService;
 

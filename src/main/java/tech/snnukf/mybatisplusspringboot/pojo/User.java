@@ -1,8 +1,10 @@
-package tech.snnukf.mybatisplusspringboot.entity;
+package tech.snnukf.mybatisplusspringboot.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+import tech.snnukf.mybatisplusspringboot.enums.SexEnum;
 
 /**
  * @className: User
@@ -13,9 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class User {
     private Long id;
     private String name;
     private Integer age;
     private String email;
+    private SexEnum sex;
 }

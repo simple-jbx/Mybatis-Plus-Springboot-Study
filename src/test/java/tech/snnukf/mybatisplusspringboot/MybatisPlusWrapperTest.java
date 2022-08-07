@@ -1,10 +1,14 @@
 package tech.snnukf.mybatisplusspringboot;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 import tech.snnukf.mybatisplusspringboot.mapper.UserMapper;
 
 import java.util.List;
@@ -116,4 +120,72 @@ public class MybatisPlusWrapperTest {
         List<User> list = userMapper.selectList(queryWrapper);
         list.forEach(System.out::println);
     }
+
+    @Test
+    public void test07() {
+        //将（年龄大于20或邮箱为null）并且用户名中包含有a的用户信息修改
+        //组装set子句以及修改条件
+        //UPDATE user SET age=?,email=? WHERE (name LIKE ? AND (age > ? OR email IS NULL))
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        //lambda表达式内的逻辑优先运算
+        updateWrapper
+                .set("age", 18)
+                .set("email", "user@snnukf.tech")
+                .like("name", "a")
+                .and(i -> i.gt("age", 20).or().isNull("email"));
+
+        //相比queryWrapper可以不用设置要更新的对象
+        int result = userMapper.update(null, updateWrapper);
+        System.out.println(result);
+    }
+
+
+    @Test
+    public void test08UseCondition() {
+        //定义查询条件，有可能为null（用户未输入或未选择）
+        String name = null;
+        Integer ageBegin = 10;
+        Integer ageEnd = 24;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .like(StringUtils.isNotBlank(name), "name", name)
+                .ge(ageBegin != null, "age", ageBegin)
+                .le(ageEnd != null, "age", ageEnd);
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void test09() {
+        //定义查询条件，有可能为null（用户未输入）
+        String username = "a";
+        Integer ageBegin = 10;
+        Integer ageEnd = 24;
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        //避免使用字符串表示字段，防止运行时错误
+        //SELECT id,name,age,email FROM user WHERE (name LIKE ? AND age >= ? AND age <= ?)
+        queryWrapper
+                .like(StringUtils.isNotBlank(username), User::getName, username)
+                .ge(ageBegin != null, User::getAge, ageBegin)
+                .le(ageEnd != null, User::getAge, ageEnd);
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void test10() {
+        //组装set子句
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        //UPDATE user SET age=?,email=? WHERE (name LIKE ? AND (age < ? OR email IS NULL))
+        updateWrapper
+                .set(User::getAge, 18)
+                .set(User::getEmail, "user@snnukf.tech")
+                .like(User::getName, "a")
+                .and(i -> i.lt(User::getAge, 24).or().isNull(User::getEmail));
+        //lambda 表达式内的逻辑优先运算
+        User user = new User();
+        int result = userMapper.update(user, updateWrapper);
+        System.out.println("受影响的行数：" + result);
+    }
+
 }

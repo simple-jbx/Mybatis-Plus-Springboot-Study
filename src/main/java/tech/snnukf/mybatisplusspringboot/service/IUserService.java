@@ -1,8 +1,7 @@
 package tech.snnukf.mybatisplusspringboot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Service;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 
 /**
  * @className: IUserService

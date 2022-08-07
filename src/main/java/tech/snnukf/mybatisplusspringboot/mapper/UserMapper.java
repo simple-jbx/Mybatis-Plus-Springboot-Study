@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 
 import java.util.Map;
 

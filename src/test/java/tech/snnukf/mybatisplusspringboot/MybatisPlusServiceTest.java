@@ -3,7 +3,7 @@ package tech.snnukf.mybatisplusspringboot;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 import tech.snnukf.mybatisplusspringboot.service.IUserService;
 
 import java.util.ArrayList;

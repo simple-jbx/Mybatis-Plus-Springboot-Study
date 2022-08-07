@@ -3,7 +3,8 @@ package tech.snnukf.mybatisplusspringboot;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tech.snnukf.mybatisplusspringboot.entity.User;
+import tech.snnukf.mybatisplusspringboot.enums.SexEnum;
+import tech.snnukf.mybatisplusspringboot.pojo.User;
 import tech.snnukf.mybatisplusspringboot.mapper.UserMapper;
 
 import java.util.Arrays;
@@ -31,7 +32,7 @@ class MybatisPlusSpringbootApplicationTests {
 
     @Test
     public void testInsert(){
-        User user = new User(null, "张三", 23, "zhangsan@atguigu.com");
+        User user = new User(null, "张三", 23, "zhangsan@snnukf.tech", SexEnum.MALE);
         //INSERT INTO user ( id, name, age, email ) VALUES ( ?, ?, ?, ? )
         int result = userMapper.insert(user);
         System.out.println("受影响行数：" + result);
@@ -69,7 +70,7 @@ class MybatisPlusSpringbootApplicationTests {
 
     @Test
     public void testUpdateById(){
-        User user = new User(4L, "admin", 22, null);
+        User user = new User(4L, "admin", 22, null, SexEnum.FEMAL);
         //UPDATE user SET name=?, age=? WHERE id=?
         int result = userMapper.updateById(user);
         System.out.println("受影响行数："+result);
